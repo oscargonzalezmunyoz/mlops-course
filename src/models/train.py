@@ -17,7 +17,7 @@ from sklearn.model_selection import train_test_split
 # -----------------
 
 BASE_DIR = Path(__file__).resolve().parents[2]
-INPUT_PATH = BASE_DIR / "data" / "processed" / "train_features_v1.csv"
+INPUT_PATH = BASE_DIR / "data" / "processed" / "train_v1.csv"
 MLFLOW_TRACKING_URI = BASE_DIR / "mlruns"
 
 EXPERIMENT_NAME = "diabetes"
@@ -31,7 +31,7 @@ RANDOM_STATE = 42
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -56,7 +56,7 @@ def load_features(path: Path) -> pd.DataFrame:
             "Run the data pipeline first: python src/data/feature_engineering.py"
         )
     df = pd.read_csv(path)
-    logger.info("Loaded %d rows, %d columns from %s", len(df), df.shape(1), path)
+    logger.info("Loaded %d rows, %d columns from %s", len(df), df.shape[1], path)
     return df    
 
 def split_data(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
@@ -68,7 +68,7 @@ def split_data(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series,
     """
 
     X = df.drop(columns=[TARGET])
-    Y = df[TARGET]
+    y = df[TARGET]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE)
     return X_train, X_test, y_train, y_test
 
@@ -87,7 +87,7 @@ def compute_metrics(y_true: pd.Series, y_pred) -> dict[str, float]:
         Dictionary with keys ``rmse``, ``mae``, ``r2``.
     """
     return {
-        "rnse": mean_squared_error(y_true, y_pred) ** 0.5,
+        "rmse": mean_squared_error(y_true, y_pred) ** 0.5,
         "mae": mean_absolute_error(y_true, y_pred),
         "r2": r2_score(y_true, y_pred),
     }
@@ -121,9 +121,9 @@ def run_experiment(model, model_type: str, params: dict,
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     run_name = f"{model_type}_{timestamp}"
 
-    with ml_flow.start_run(run_name=run_name):
+    with mlflow.start_run(run_name=run_name):
         # --- Tags ---
-        ml_flow.set_tags({
+        mlflow.set_tags({
             "model_type": model_type,
             "dataset": INPUT_PATH.name,
             "stage": "training",
@@ -139,7 +139,7 @@ def run_experiment(model, model_type: str, params: dict,
         metrics = compute_metrics(y_test, y_pred)
         mlflow.log_metrics(metrics)
         logger.info(
-            "[%s] rmse%.4f mae=%.4f r2=%.4f",
+            "[%s] rmse=%.4f  mae=%.4f  r2=%.4f",
             model_type,
             metrics["rmse"],
             metrics["mae"],
@@ -181,9 +181,9 @@ def main() -> None:
     # --- Model 2: RandomForestRegressor ---
     
     run_experiment(
-        model=RandomForestRegressor(n_estimators=100, max_depth=15, random_state=RANDOMSTATE),
+        model=RandomForestRegressor(n_estimators=100, max_depth=15, random_state=RANDOM_STATE),
         model_type="RandomForestRegressor",
-        params={"n_estiamtors": 100, "max_depth": 15, "random_state": RANDOM_STATE},
+        params={"n_estiamtors": 100, "random_state": RANDOM_STATE},
         X_train=X_train, X_test=X_test,
         y_train=y_train, y_test=y_test,
     )
