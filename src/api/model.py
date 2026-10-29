@@ -22,7 +22,7 @@ from mlflow import MlflowClient
 BASE_DIR = Path(__file__).resolve().parents[2]
 MLFLOW_TRACKING_URI = BASE_DIR / "mlruns"
 
-MODEL_NAME = "diabetes"
+MODEL_NAME = "diabetes-model"
 MODEL_ALIAS = "champion"
 MODEL_URI = f"models://{MODEL_NAME}@{MODEL_ALIAS}"
 

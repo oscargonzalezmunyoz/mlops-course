@@ -31,7 +31,7 @@ from .model import (
     _state,
     get_model,
     get_model_info,
-    load_champinon_model,
+    load_champion_model,
 )
 from .schemas import FEATURE_COLUMNS, DiabetesFeatures, PredictionResponse
 
@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Call load_champion_model() before the app starts accepting requests."""
-    load_champinon_model()
+    load_champion_model()
     yield #application runs here
     logger.info("SHutting down - releasing model from memory.")
     _state["model"] = None
