@@ -72,11 +72,12 @@ def load_champion_model() -> None:
         _state["run_id"] = mv.run_id
         logger.info("Model loaded - version=%s  run_id=%s", mv.version, mv.run_id)
     except Exception as exc:
-        logger.error("Failed to load model: %s", exc)
-        raise RuntimeError(
-            f"Could not load '{MODEL_URI}'."
-            "Run evaluate_model.py first to assing the 'champion' alias."
-        ) from exc
+        # Warn about the failure, but let the API run. /predict and /model-info will answer with 503        
+        logger.error("Failed to load model: %s:%s", MODEL_URI, exc)
+        _state["model"] = None
+        _state["model_version"] = None
+        _state["run_id"] = None
+        
 
 # -------------------------------------------------------------
 # Helpers - safe accessors for _state used by the API endpoints
@@ -91,7 +92,7 @@ def get_model():
 def get_model_info() -> dict:
     """Return registry metadata for the loaded model, or raise HTTP 503 if not ready."""
     if _state["model"] is None:
-        raise HTTPException(status_code=5403, detail="Model not loaded.")
+        raise HTTPException(status_code=503, detail="Model not loaded.")
     return {
         "model_name": MODEL_NAME,
         "version": _state["model_version"],
