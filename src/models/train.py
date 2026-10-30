@@ -6,6 +6,7 @@ import mlflow
 import mlflow.sklearn
 import pandas as pd
 
+from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import GradientBoostingRegressor
@@ -168,6 +169,16 @@ def main() -> None:
 
     df = load_features(INPUT_PATH)
     X_train, X_test, y_train, y_test = split_data(df)
+
+    # --- Baseline : DummyRegressor ---
+    # Always predicts the training mean. Any useful model must beat it.
+    run_experiment(
+        model=DummyRegressor(strategy="mean"),
+        model_type="DummyRegressor",
+        params={"strategy": "mean"},
+        X_train = X_train, X_test = X_test,
+        y_train = y_train, y_test = y_test,
+    )
 
     # --- Model 1: Linear Regression ---
     run_experiment(

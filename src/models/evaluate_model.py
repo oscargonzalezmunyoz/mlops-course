@@ -1,4 +1,5 @@
 import logging
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -255,6 +256,7 @@ def main() -> None:
                        " Alias 'champion' was not assigned.",
                        model_version,
         )
+        sys.exit(1)
     
     logger.info("Done. Open the MLflow UI to review the evaluation run:\n"
                 "  mlflow ui --backend-store-uri %s",

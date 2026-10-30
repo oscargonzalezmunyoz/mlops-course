@@ -1,4 +1,5 @@
 from typing import Optional
+import sys
 import pandas as pd
 from pydantic import BaseModel, ValidationError
 
@@ -50,13 +51,17 @@ def validate_dataset(df: pd.DataFrame) -> None:
     print(f"Total rows: {total}")
     print(f"Valid rows: {valid}")
     print(f"Invalid rows: {invalid}")
+    if invalid > 0:
+        print("Validation failed.")
+        # Early exit when the validation fails
+        sys.exit(1)
 
 def main():
     """Load the raw dataset and run validation."""
     path = "data/raw/diabetes.csv"
     print(f"Load dataset from: {path}")
     df = pd.read_csv(path)
-    validate_dataset(df)
+    validate_dataset(df)    
 
 if __name__ == "__main__":
     main()
