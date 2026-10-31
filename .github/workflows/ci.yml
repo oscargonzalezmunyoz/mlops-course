@@ -49,6 +49,11 @@ jobs:
             curl -s http://localhost:8000/health && break
             sleep 1
           done
+      # Smoke tests. --fail makes curl exit 1 on HTTP errors
+      - name: Test API
+        run: |
+          curl --fail http://localhost:8000/health
+          curl --fail http://localhost:8000/model-info          
       - name: API logs
         if: failure()
         run: docker logs api
