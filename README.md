@@ -42,7 +42,7 @@ flowchart LR
 ```
 
 ## Repository structure
-
+```
 │   Dockerfile                             # API image (includes MLflow registry)<br>
 │   requirements.txt                       # Fixed dependencies<br>
 │   run_api.sh                             # Builds and runs the API container<br>
@@ -65,7 +65,7 @@ flowchart LR
          ├ evaluate_model.py               # Evaluates the last version, applies quality gate<br>
          ├ register_model.py               # Registers best run in the Model Registry<br>
          └ train.py                        # Trains 4 models, logs params/metrics/artifacts<br>
-
+```
 
 Generated folders are not versioned `data/raw/`, `data/processed/` and `mlruns/` are created by the pipeline
 
