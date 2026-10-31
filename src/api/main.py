@@ -6,8 +6,8 @@ and exposes three endpoints: a health check, model metadata, and a predict route
 """
 
 # MLOps concept:
-# Model Serving is the step that makes a trained model available to other system.s
-# Instead of running a script manually, we expose the model behind an HTTP PAI so
+# Model Serving is the step that makes a trained model available to other systems
+# Instead of running a script manually, we expose the model behind an HTTP API so
 # that any client (a web app, a pipeline, a notebook) can request predictions at any time
 # without knowing anything about the scikit-learn or MLflow internals
 #
@@ -18,7 +18,7 @@ and exposes three endpoints: a health check, model metadata, and a predict route
 #      malformed requests automatically before they reach the model.
 #   3. Alias-based loading - we load 'models:/diabetes-model@champion' instead
 #      of a hard-coded version number, so promoting a new champion in the registry
-#      is enough to update what the API serves (requieres a restart)
+#      is enough to update what the API serves (requires a restart)
 
 import logging
 from contextlib import asynccontextmanager
@@ -47,7 +47,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------
-# Lifespan - startup/shutdown hook; delegates model laoding to model.py
+# Lifespan - startup/shutdown hook; delegates model loading to model.py
 # ---------------------------------------------------------------------
 
 @asynccontextmanager
@@ -55,7 +55,7 @@ async def lifespan(app: FastAPI):
     """Call load_champion_model() before the app starts accepting requests."""
     load_champion_model()
     yield #application runs here
-    logger.info("SHutting down - releasing model from memory.")
+    logger.info("Shutting down - releasing model from memory.")
     _state["model"] = None
 
 # -----------------------------------------------------------
@@ -83,7 +83,7 @@ def model_info() -> dict:
 def predict(features: DiabetesFeatures) -> PredictionResponse:
     """Return the predicted measure for a single patient.
     
-    Aargs:
+    Args:
         features: the 10 feature values for one patient.
 
     Returns:

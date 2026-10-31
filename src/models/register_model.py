@@ -21,7 +21,7 @@ def get_best_run(client: MlflowClient, experiment_name: str) -> mlflow.entities.
         The MLflow Run object with the best (lowest) RMSE.
     
     Raises:
-        ValueError: IF the experiment does not exxist or has no finished runs.
+        ValueError: If the experiment does not exist or has no finished runs.
     """
     experiment = client.get_experiment_by_name(experiment_name)
     if experiment is None:

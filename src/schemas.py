@@ -8,7 +8,7 @@ from typing import Annotated
 from pydantic import BaseModel, Field, ConfigDict
 from .config import FEATURE_MIN, FEATURE_MAX
 
-# All input columns must be scaled .We reject unscaled values in columns that 
+# All input columns must be scaled. We reject unscaled values in columns that 
 # were suposed to be scaled, limiting the range from -1 to +1
 ScaledFeature = Annotated[float, Field(ge=FEATURE_MIN, le=FEATURE_MAX)]
 class DiabetesFeatures(BaseModel):

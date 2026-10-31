@@ -1,7 +1,7 @@
 """
 MLflow model loader for the Diabetes prediction API
 
-Owns the moduole-level _state dict, the load_champion_model() startup funciton,
+Owns the module-level _state dict, the load_champion_model() startup function,
 and two helpers (get_model, get_model_info) that endpoints call to access the
 loaded model safely
 """
@@ -47,7 +47,7 @@ def load_champion_model() -> None:
     """ Load the champion model from the MLflow registry into _state.
     
     Sets the MLflow tracking URI, loads the pyfunc model, and fetches version
-    metadata via MlflowCLient. Reaises RuntimeError if the alias does not exist.
+    metadata via MlflowClient. Raises RuntimeError if the alias does not exist.
     """
 
     os.environ["MLFLOW_TRACKING_URI"] = MLFLOW_TRACKING_URI.as_uri()
@@ -58,8 +58,8 @@ def load_champion_model() -> None:
         client = MlflowClient()
         mv = client.get_model_version_by_alias(REGISTERED_MODEL_NAME, MODEL_ALIAS)
 
-        # Build the artifact path from known componentes instead of following the
-        # stored artifact_uri, which is an absolute hosth path and breaks in Docker.
+        # Build the artifact path from known components instead of following the
+        # stored artifact_uri, which is an absolute host path and breaks in Docker.
         run = client.get_run(mv.run_id)
         model_path = (
             MLFLOW_TRACKING_URI / run.info.experiment_id / mv.run_id / "artifacts" / "model"

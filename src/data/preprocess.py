@@ -33,7 +33,7 @@ def save_data(df: pd.DataFrame, path: Path) -> None:
 
 def main() -> None:
     """Run the full preprocessing pipeline"""
-    print("Loading raw data..:")
+    print("Loading raw data...")
     df = load_data(RAW_PATH)
     rows_before = len(df)
     print(f"Rows before cleaning: {rows_before}")

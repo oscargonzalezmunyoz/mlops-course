@@ -73,7 +73,7 @@ def get_latest_version(client: MlflowClient, model_name: str) -> str:
         model_name: Registered model name.
     
     Returns:
-        Version nubmer as a string
+        Version number as a string
     
     Raises:
         ValueError: If no versions exist for the given model name.        
@@ -120,7 +120,7 @@ def evaluate_registered_model(
     model_uri = f"models:/{REGISTERED_MODEL_NAME}/{model_version}"
     logger.info("Evaluating model URI: %s", model_uri)
 
-    # mflow.evaluate() requires a DataFrame that includes the target column
+    # mlflow.evaluate() requires a DataFrame that includes the target column
     eval_data = X_test.copy()
     eval_data[TARGET] = y_test.values
 
@@ -219,7 +219,7 @@ def assign_champion_alias(
     
     
 def main() -> None:
-    """Evaluate the latest registered model and promote it if it pases quality gates."""
+    """Evaluate the latest registered model and promote it if it passes quality gates."""
 
     mlflow.set_tracking_uri(MLFLOW_TRACKING_URI.as_uri())
     mlflow.set_experiment(EXPERIMENT_NAME)

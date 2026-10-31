@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 # ----
 
 def load_features(path: Path) -> pd.DataFrame:
-    """Load the enginered feature dataset from CSV:
+    """Load the engineered feature dataset from CSV:
     
     Args:
         path: Path to train_v1.csv"
@@ -102,7 +102,7 @@ def run_experiment(model, model_type: str, params: dict,
     Tags logged:
         - ``model_type``: class name of  the estimator
         - ``dataset``: source file name
-        - ``stage++: always ``"training"`` for this script
+        - ``stage``: always ``"training"`` for this script
 
     Args:
         model: An unfitted scikit-learn estimator.
@@ -110,7 +110,7 @@ def run_experiment(model, model_type: str, params: dict,
         params: Hyperparameter dict to log with ``mlflow.log_params``
         X_train: Training feature matrix.
         X_test: Test feature matrix.
-        y_train_ Training target series.
+        y_train: Training target series.
         y_test: Test target series.
             
     """
