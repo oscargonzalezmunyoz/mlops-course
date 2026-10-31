@@ -17,18 +17,9 @@ from sklearn.model_selection import train_test_split
 # Paths & constants
 # -----------------
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-INPUT_PATH = BASE_DIR / "data" / "processed" / "train_v1.csv"
-MLFLOW_TRACKING_URI = BASE_DIR / "mlruns"
-
-EXPERIMENT_NAME = "diabetes"
-TARGET = "target"
-TEST_SIZE = 0.2
-RANDOM_STATE = 42
-
-# Training Hyperparameters
-RANDOM_FOREST_ESTIMATORS = 100
-RANDOM_FOREST_MAX_DEPTH = 15
+from src.config import PROCESSED_PATH, MLFLOW_TRACKING_URI
+from src.config import EXPERIMENT_NAME, TARGET, TEST_SIZE, RANDOM_STATE
+from src.config import RANDOM_FOREST_ESTIMATORS, RANDOM_FOREST_MAX_DEPTH
 
 # -------
 # Logging
@@ -130,7 +121,7 @@ def run_experiment(model, model_type: str, params: dict,
         # --- Tags ---
         mlflow.set_tags({
             "model_type": model_type,
-            "dataset": INPUT_PATH.name,
+            "dataset": PROCESSED_PATH.name,
             "stage": "training",
         }) 
         # --- Params ---
@@ -171,7 +162,7 @@ def main() -> None:
     logger.info("MLflow tracking URI: %s", MLFLOW_TRACKING_URI)
     logger.info("Experiment:          %s", EXPERIMENT_NAME)
 
-    df = load_features(INPUT_PATH)
+    df = load_features(PROCESSED_PATH)
     X_train, X_test, y_train, y_test = split_data(df)
 
     # --- Baseline : DummyRegressor ---

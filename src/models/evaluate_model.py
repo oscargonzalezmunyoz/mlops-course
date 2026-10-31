@@ -4,24 +4,15 @@ from datetime import datetime
 from pathlib import Path
 
 import mlflow
-import mlflow.sklearn
 import pandas as pd
 from mlflow.tracking import MlflowClient
 from sklearn.model_selection import train_test_split
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-INPUT_PATH = BASE_DIR / "data" / "processed" / "train_v1.csv"
-MLFLOW_TRACKING_URI = BASE_DIR / "mlruns"
 
-EXPERIMENT_NAME = "diabetes"
-REGISTERED_MODEL_NAME = "diabetes-model"
-TARGET = "target"
-TEST_SIZE = 0.2
-RANDOM_STATE = 42
+from src.config import PROCESSED_PATH, MLFLOW_TRACKING_URI
+from src.config import EXPERIMENT_NAME, REGISTERED_MODEL_NAME, TARGET, TEST_SIZE, RANDOM_STATE
+from src.config import RMSE_THRESHOLD, R2_THRESHOLD, MODEL_ALIAS
 
-#Quality thresholds for the champion alias
-RMSE_THRESHOLD = 60.0
-R2_THRESHOLD = 0.40
 
 # -------
 # Logging
@@ -141,7 +132,7 @@ def evaluate_registered_model(
             "stage": "evaluation",
             "model_version": model_version,
             "registered_model_name": REGISTERED_MODEL_NAME,
-            "dataset": INPUT_PATH.name,
+            "dataset": PROCESSED_PATH.name,
         })
 
         # mlflow.evaluate() computes a standard regression metric suite and
@@ -189,7 +180,7 @@ def passes_quality_gate(metrics: dict) -> bool:
     r2 = metrics.get("r2_score", float("-inf"))
 
     logger.info(
-        "Quality gate check - rmse=%.4f (threshold < %.1f)  r2=%.4f (threshold > %.1f)",
+        "Quality gate check - rmse=%.4f (threshold < %.2f)  r2=%.4f (threshold > %.2f)",
         rmse, RMSE_THRESHOLD, r2, R2_THRESHOLD,        
     )
     return rmse < RMSE_THRESHOLD and r2 > R2_THRESHOLD
@@ -214,7 +205,7 @@ def assign_champion_alias(
     """
     client.set_registered_model_alias(
         name=model_name,
-        alias="champion",
+        alias=MODEL_ALIAS,
         version=model_version,
     )
     logger.info("Alias 'champion' assigned to '%s' version %s.",
@@ -242,7 +233,7 @@ def main() -> None:
     model_version = get_latest_version(client, REGISTERED_MODEL_NAME)
 
     # --- Load test data ---
-    X_test, y_test = load_test_data(INPUT_PATH)
+    X_test, y_test = load_test_data(PROCESSED_PATH)
 
     # --- Evaluate ---
     result = evaluate_registered_model(client, model_version, X_test, y_test)

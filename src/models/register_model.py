@@ -3,10 +3,8 @@ from pathlib import Path
 
 import mlflow
 from mlflow.tracking import MlflowClient
-BASE_DIR = Path(__file__).resolve().parents[2]
-MLFLOW_TRACKING_URI = BASE_DIR / "mlruns"
-EXPERIMENT_NAME = "diabetes"
-REGISTERED_MODEL_NAME = "diabetes-model"
+from src.config import MLFLOW_TRACKING_URI
+from src.config import EXPERIMENT_NAME, REGISTERED_MODEL_NAME
 
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s - %(levelname)s - %(message)s - ",

@@ -22,22 +22,22 @@ jobs:
         run: pip install -r requirements.txt
       # Download the diabetes dataset and save to data/raw/
       - name: Load raw data
-        run: python src/data/load_data.py
+        run: python src.data.load_data
       # Check field types and required columns with Pydantic
       - name: Validate data
-        run: python src/data/validate_data.py
+        run: python src.data.validate_data
       # Fill nulls, fix types -> data/processed/train_v1.csv
       - name: Preprocess data
-        run: python src/data/preprocess.py
+        run: python src.data.preprocess
       # Train LinearRegression, RandomForest and GradientBoosting; log runs to MLflow
       - name: Train models
-        run: python src/models/train.py
+        run: python src.models.train
       # Register the best run in the MLflow Model Registry
       - name: Register models
-        run: python src/models/register_model.py
+        run: python src.models.register_model
       # Run quality gate: exit 1 if rmse >= 60.0 or r2 <= 0.40
       - name: Evaluate models
-        run: python src/models/evaluate_model.py
+        run: python src.models.evaluate_model
       
 
       

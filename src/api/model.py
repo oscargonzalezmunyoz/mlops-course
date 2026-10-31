@@ -18,13 +18,10 @@ from mlflow import MlflowClient
  # ---------------------------------------------------------------
  # Paths & constants - tracking URI and model registry identifiers
  # ---------------------------------------------------------------
+from src.config import MLFLOW_TRACKING_URI
+from src.config import REGISTERED_MODEL_NAME, MODEL_ALIAS
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-MLFLOW_TRACKING_URI = BASE_DIR / "mlruns"
-
-MODEL_NAME = "diabetes-model"
-MODEL_ALIAS = "champion"
-MODEL_URI = f"models:/{MODEL_NAME}@{MODEL_ALIAS}"
+MODEL_URI = f"models:/{REGISTERED_MODEL_NAME}@{MODEL_ALIAS}"
 
 # --------------------------------------------------------------------
 # Logging - module-level logger (basicConfig is configured in main.py)
@@ -59,7 +56,7 @@ def load_champion_model() -> None:
     logger.info("Loading model from registry: %s", MODEL_URI)
     try:
         client = MlflowClient()
-        mv = client.get_model_version_by_alias(MODEL_NAME, MODEL_ALIAS)
+        mv = client.get_model_version_by_alias(REGISTERED_MODEL_NAME, MODEL_ALIAS)
 
         # Build the artifact path from known componentes instead of following the
         # stored artifact_uri, which is an absolute hosth path and breaks in Docker.
@@ -94,11 +91,9 @@ def get_model_info() -> dict:
     if _state["model"] is None:
         raise HTTPException(status_code=503, detail="Model not loaded.")
     return {
-        "model_name": MODEL_NAME,
+        "model_name": REGISTERED_MODEL_NAME,
         "version": _state["model_version"],
         "alias": MODEL_ALIAS,
         "run_id": _state["run_id"],
     }
-
-
 
