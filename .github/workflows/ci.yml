@@ -13,10 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       # Install the Python version used in development
-      - name: Set up Python 3.11
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
       # Install all project libraries
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -59,7 +59,7 @@ jobs:
         run: |
           curl -w "\n" --fail http://localhost:8000/health
           curl -w "\n" --fail http://localhost:8000/model-info        
-          curl -w "\n"  -X POST http://localhost:8000/predict -H "Content-Type: application/json" \
+          curl -w "\n" --fail -X POST http://localhost:8000/predict -H "Content-Type: application/json" \
           -d '{"age":0.038,"sex":0.05,"bmi":0.0617,"bp":0.0219,"s1":-0.0442,"s2":-0.0348,"s3":-0.0434,"s4":-0.0026,"s5":0.0199,"s6":-0.0176}'  
       - name: API logs
         if: failure()

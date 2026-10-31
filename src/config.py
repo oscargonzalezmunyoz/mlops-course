@@ -13,8 +13,6 @@ FEATURE_MIN, FEATURE_MAX = -1.0, 1.0 # features are scaled
 
 # --- Training ---
 EXPERIMENT_NAME = "diabetes"
-REGISTERED_MODEL_NAME = "diabetes-model"
-TARGET = "target"
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
 RANDOM_FOREST_ESTIMATORS = 100

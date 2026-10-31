@@ -24,16 +24,16 @@ class DiabetesFeatures(BaseModel):
             ]
         }
     )
-    age: float = ScaledFeature # Age of the patient
-    sex: float = ScaledFeature # Gender of the patient
-    bmi: float = ScaledFeature # Body mass index
-    bp:  float = ScaledFeature # Average blood pressure
-    s1:  float = ScaledFeature # Total serum cholesterol (tc)
-    s2:  float = ScaledFeature # Low-density lipoproteins (ldl)
-    s3:  float = ScaledFeature # High-density lipoproteins (hdl)
-    s4:  float = ScaledFeature # Total cholesterol / HDL (tch)
-    s5:  float = ScaledFeature # Possibly log of serum triglycerides level (ltg)
-    s6:  float = ScaledFeature # Blood sugar level (glu)
+    age: ScaledFeature # Age of the patient
+    sex: ScaledFeature # Gender of the patient
+    bmi: ScaledFeature # Body mass index
+    bp:  ScaledFeature # Average blood pressure
+    s1:  ScaledFeature # Total serum cholesterol (tc)
+    s2:  ScaledFeature # Low-density lipoproteins (ldl)
+    s3:  ScaledFeature # High-density lipoproteins (hdl)
+    s4:  ScaledFeature # Total cholesterol / HDL (tch)
+    s5:  ScaledFeature # Possibly log of serum triglycerides level (ltg)
+    s6:  ScaledFeature # Blood sugar level (glu)
 
 class DiabetesRecord(DiabetesFeatures):
     """A full dataset row including the target, for pipeline validation"""
