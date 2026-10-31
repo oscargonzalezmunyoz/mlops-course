@@ -24,7 +24,7 @@ MLFLOW_TRACKING_URI = BASE_DIR / "mlruns"
 
 MODEL_NAME = "diabetes-model"
 MODEL_ALIAS = "champion"
-MODEL_URI = f"models://{MODEL_NAME}@{MODEL_ALIAS}"
+MODEL_URI = f"models:/{MODEL_NAME}@{MODEL_ALIAS}"
 
 # --------------------------------------------------------------------
 # Logging - module-level logger (basicConfig is configured in main.py)

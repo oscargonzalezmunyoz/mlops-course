@@ -21,7 +21,7 @@ RANDOM_STATE = 42
 
 #Quality thresholds for the champion alias
 RMSE_THRESHOLD = 60.0
-R2_THRESHOLD = 0.40
+R2_THRESHOLD = 0.45
 
 # -------
 # Logging
@@ -170,8 +170,8 @@ def passes_quality_gate(metrics: dict) -> bool:
     """Return True if the model meets the minimum quality thresholds
 
     Thresholds:
-        - ``mean_squared_error`` (RMSE equivalent via sqrt): rmse < 0.6
-        - ``r2_score``: r2 > 0.7
+        - ``mean_squared_error`` (RMSE equivalent via sqrt): rmse < 60
+        - ``r2_score``: r2 > 0.45
 
     mlflow.evaluate() for regressors logs ``mean_squared_error`` (MSE) and ``r2_score`` by default.
     We derive RMSE from MSE for the gate check

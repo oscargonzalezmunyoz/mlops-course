@@ -1,2 +1,6 @@
 /mlruns
-/src/api/__pycache__
+__pycache__/
+.venv/
+*.pyc
+/data/raw/*.csv
+/data/processed/*.csv

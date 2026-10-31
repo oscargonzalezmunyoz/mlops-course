@@ -4,7 +4,7 @@ import pandas as pd
 from pydantic import BaseModel, ValidationError
 
 class DiabetesData(BaseModel):
-    age: float # Age in years
+    age: float # Age of the patient
     sex: float # Gender of the patient
     bmi: float # Body mass index
     bp:  float # Average blood pressure
@@ -14,6 +14,7 @@ class DiabetesData(BaseModel):
     s4:  float # Total cholesterol / HDL (tch)
     s5:  float # Possibly log of serum triglycerides level (ltg)
     s6:  float # Blood sugar level (glu)
+    target: float # targeat column
 
 def validate_row(row: dict, index: int) -> bool:
     """ Try to validate a single row against the Diabetes model.

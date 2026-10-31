@@ -41,7 +41,7 @@ from .schemas import FEATURE_COLUMNS, DiabetesFeatures, PredictionResponse
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(ascitme)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -80,10 +80,10 @@ def model_info() -> dict:
 
 @app.post("/predict")
 def predict(features: DiabetesFeatures) -> PredictionResponse:
-    """Return a price prediction for a single housing record.
+    """Return the predicted measure for a single patient.
     
     Aargs:
-        features: the 10 engineered feature values for one patient.
+        features: the 10 feature values for one patient.
 
     Returns:
         Prediction response with the predicted quantitative measure of 

@@ -26,6 +26,10 @@ TARGET = "target"
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
 
+# Training Hyperparameters
+RANDOM_FOREST_ESTIMATORS = 100
+RANDOM_FOREST_MAX_DEPTH = 15
+
 # -------
 # Logging
 # -------
@@ -44,7 +48,7 @@ def load_features(path: Path) -> pd.DataFrame:
     """Load the enginered feature dataset from CSV:
     
     Args:
-        path: Path to train_features.v1.csv"
+        path: Path to train_v1.csv"
     Returns:
         DataFrame with all features and target column.
     Raises
@@ -54,7 +58,7 @@ def load_features(path: Path) -> pd.DataFrame:
     if not path.exists():
         raise FileNotFoundError(
             f"Input file not found: {path}\n"
-            "Run the data pipeline first: python src/data/feature_engineering.py"
+            "Run the data pipeline first: python src/data/preprocess.py"
         )
     df = pd.read_csv(path)
     logger.info("Loaded %d rows, %d columns from %s", len(df), df.shape[1], path)
@@ -192,9 +196,9 @@ def main() -> None:
     # --- Model 2: RandomForestRegressor ---
     
     run_experiment(
-        model=RandomForestRegressor(n_estimators=100, max_depth=15, random_state=RANDOM_STATE),
+        model=RandomForestRegressor(n_estimators=RANDOM_FOREST_ESTIMATORS, max_depth=RANDOM_FOREST_MAX_DEPTH, random_state=RANDOM_STATE),
         model_type="RandomForestRegressor",
-        params={"n_estiamtors": 100, "random_state": RANDOM_STATE},
+        params={"n_estimators": RANDOM_FOREST_ESTIMATORS, "max_depth": RANDOM_FOREST_MAX_DEPTH, "random_state": RANDOM_STATE},
         X_train=X_train, X_test=X_test,
         y_train=y_train, y_test=y_test,
     )

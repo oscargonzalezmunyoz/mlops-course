@@ -99,9 +99,9 @@ def add_model_description(
     description = (
         f"Best run from experiment '{EXPERIMENT_NAME}'."
         f"Model type: {model_type}. "
-        f"MRSE: {metrics.get('rmse', float('nan')):4f}  "
-        f"MAE: {metrics.get('mae', float('nan')):4f}  "
-        f"R2: {metrics.get('r2', float('nan')):4f}"
+        f"MRSE: {metrics.get('rmse', float('nan')):.4f}  "
+        f"MAE: {metrics.get('mae', float('nan')):.4f}  "
+        f"R2: {metrics.get('r2', float('nan')):.4f}"
     )
 
     client.update_model_version(
