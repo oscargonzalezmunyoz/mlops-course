@@ -12,7 +12,7 @@ jobs:
       # Download the repository files onto the runner
       - name: Checkout code
         uses: actions/checkout@v4
-      # Install the Pyton version used in development
+      # Install the Python version used in development
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -35,7 +35,7 @@ jobs:
       # Register the best run in the MLflow Model Registry
       - name: Register models
         run: python src/models/register_model.py
-      # Run quality gate: exit 1 if rmse >= 60.0 or r2 <= 0.45
+      # Run quality gate: exit 1 if rmse >= 60.0 or r2 <= 0.40
       - name: Evaluate models
         run: python src/models/evaluate_model.py
       
