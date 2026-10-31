@@ -43,6 +43,7 @@ flowchart LR
 
 ## Repository structure
 ```
+<root>
 │   Dockerfile                             # API image (includes MLflow registry)<br>
 │   requirements.txt                       # Fixed dependencies<br>
 │   run_api.sh                             # Builds and runs the API container<br>
