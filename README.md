@@ -102,8 +102,8 @@ The script stops at the first failing step. Each step can also be run on its own
 | Cleaning                | `python -m src.models.preprocess`   | - Coerces all columns to numeric<br>- Drops rows with missing values<br>- Removes duplicates<br>- Saves `data/processed/train_v1.csv`                                                                                      |
 | Feature<br/>Engineering | `python -m src.data.features`       | Adds the three engineered features described below. Saves `data/processed/train_features_v1.csv`                                                                                                                           |
 | Training                | `python -m src.models.train`        | Trains the models and logs everything to MLflow                                                                                                                                                                            |
-| Registration            | python -m src.models.register_model | Registers the best run in the MLflow Model Registry                                                                                                                                                                        |
-| Evaluation              | python -m src.models.evaluate_model | Evaluates the latest registered version and assigns the `champion` alias if it passes the quality gate                                                                                                                     |
+| Registration            | `python -m src.models.register_model` | Registers the best run in the MLflow Model Registry                                                                                                                                                                        |
+| Evaluation              | `python -m src.models.evaluate_model` | Evaluates the latest registered version and assigns the `champion` alias if it passes the quality gate                                                                                                                     |
 
 ## Feature engineering
 
