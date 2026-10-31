@@ -32,7 +32,7 @@ jobs:
       # Add new features to the input data -> data/processed/train_features_v1.csv    
       - name: Feature engineering
         run: python -m src.data.features
-      # Train LinearRegression, RandomForest and GradientBoosting; log runs to MLflow
+      # Train all models; log runs to MLflow
       - name: Train models
         run: python -m src.models.train
       # Register the best run in the MLflow Model Registry
