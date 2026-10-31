@@ -38,6 +38,20 @@ jobs:
       # Run quality gate: exit 1 if rmse >= 60.0 or r2 <= 0.40
       - name: Evaluate models
         run: python -m src.models.evaluate_model
+      # Build the API image
+      - name: Build API image
+        run: docker build -t mlops-API
+      # Start the api in background, wait until /health answers
+      - name: Start API
+        run |
+          docker run -d --name api -p 8000:8000 mlops-api
+          for i in $(seq 1 30); do
+            curl -s http://localhost:8000/health && break
+            sleep 1
+          done
+      - name: API logs
+        if: failure()
+        run: docker logs api
       
 
       
