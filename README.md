@@ -43,29 +43,28 @@ flowchart LR
 
 ## Repository structure
 
-│   Dockerfile                                    # API image (includes MLflow registry)
-│   requirements.txt                        # Fixed dependencies
-│   run_api.sh                                    # Builds and runs the API container
-│   run_pipeline.sh                           # Runs the whole pipeline locally (same order as CI)
-│   run_test_api.sh                           # API Smoke tests (used locally and in CI)
-├───notebooks
-│      └  Proyecto_MLOps.ipynb     #Exploratory analysis and first modeling (provided)
-└───src
-    │   ├ config.py                              # Paths, constants, hyperparams, quality thresholds
-    │   └ schemas.py                         # Pydantic schemas shared for validation and API
-    ├───api
-    │   ├ main.py                                # FastAPI app and endpoints
-    │   ├ model.py                              # Loads the champion model at startup, model state
-    ├───data
-    │   ├ load_data.py                        # Extraction -> data/raw/diabetes.csv
-    │   ├ preprocess.py                      # Cleaning -> data/processed/train_v1.csv
-
-   │    ├ features.py                           # Feature eng. -> data/processed/train_features_v1.csv
-    │   └ validate_data.py                   # Schema validation for all rows. exits 1 on failure
-    ├───models
-         ├ evaluate_model.py               # Evaluates the last version, applies quality gate
-         ├ register_model.py                # Registers best run in the Model Registry
-         └ train.py                                   # Trains 4 models, logs params/metrics/artifacts
+│   Dockerfile                             # API image (includes MLflow registry)<br>
+│   requirements.txt                       # Fixed dependencies<br>
+│   run_api.sh                             # Builds and runs the API container<br>
+│   run_pipeline.sh                        # Runs the whole pipeline locally (same order as CI)<br>
+│   run_test_api.sh                        # API Smoke tests (used locally and in CI)<br>
+├───notebooks<br>
+│      └  Proyecto_MLOps.ipynb             # Exploratory analysis and first modeling (provided)<br>
+└───src<br>
+    │   ├ config.py                        # Paths, constants, hyperparams, quality thresholds<br>
+    │   └ schemas.py                       # Pydantic schemas shared for validation and API<br>
+    ├───api<br>
+    │   ├ main.py                          # FastAPI app and endpoints<br>
+    │   ├ model.py                         # Loads the champion model at startup, model state<br>
+    ├───data<br>
+    │   ├ load_data.py                     # Extraction -> data/raw/diabetes.csv<br>
+    │   ├ preprocess.py                    # Cleaning -> data/processed/train_v1.csv<br>
+    │   ├ features.py                      # Feature eng. -> data/processed/train_features_v1.csv<br>
+    │   └ validate_data.py                 # Schema validation for all rows. exits 1 on failure<br>
+    ├───models<br>
+         ├ evaluate_model.py               # Evaluates the last version, applies quality gate<br>
+         ├ register_model.py               # Registers best run in the Model Registry<br>
+         └ train.py                        # Trains 4 models, logs params/metrics/artifacts<br>
 
 
 Generated folders are not versioned `data/raw/`, `data/processed/` and `mlruns/` are created by the pipeline
