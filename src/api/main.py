@@ -25,9 +25,9 @@ from contextlib import asynccontextmanager
 
 import pandas as pd
 from fastapi import FastAPI, HTTPException
+from src.config import REGISTERED_MODEL_NAME
 
-from .model import (
-    MODEL_NAME,
+from .model import (   
     _state,
     get_model,
     get_model_info,
@@ -72,7 +72,7 @@ app = FastAPI(
 @app.get("/health")
 def health() -> dict:
     """Return service liveness and the registered model name."""
-    return {"status": "ok", "model": MODEL_NAME}
+    return {"status": "ok", "model": REGISTERED_MODEL_NAME}
 
 @app.get("/model-info")
 def model_info() -> dict:

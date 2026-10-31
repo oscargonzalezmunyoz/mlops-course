@@ -46,9 +46,14 @@ jobs:
         run: |
           docker run -d --name api -p 8000:8000 mlops-api
           for i in $(seq 1 30); do
-            curl -s http://localhost:8000/health && break
+            if curl -s http://localhost:8000/health; then
+              echo "API ready after $i seconds"
+              exit 0
+            fi
             sleep 1
           done
+          echo "API did not answer in 30 seconds"
+          exit 1
       # Smoke tests. --fail makes curl exit 1 on HTTP errors
       - name: Test API
         run: |
@@ -56,7 +61,9 @@ jobs:
           curl --fail http://localhost:8000/model-info          
       - name: API logs
         if: failure()
-        run: docker logs api
+        run: |
+          docker ps -a
+          docker logs api
       
 
       
