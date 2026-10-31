@@ -2,6 +2,7 @@ import sys
 import pandas as pd
 from pydantic import BaseModel, Field, ValidationError
 from src.schemas import DiabetesRecord
+from src.config import RAW_PATH
 
 
 def validate_row(row: dict, index: int) -> bool:
@@ -47,9 +48,9 @@ def validate_dataset(df: pd.DataFrame) -> None:
 
 def main():
     """Load the raw dataset and run validation."""
-    path = "data/raw/diabetes.csv"
-    print(f"Load dataset from: {path}")
-    df = pd.read_csv(path)
+    
+    print(f"Load dataset from: {RAW_PATH}")
+    df = pd.read_csv(RAW_PATH)
     validate_dataset(df)    
 
 if __name__ == "__main__":

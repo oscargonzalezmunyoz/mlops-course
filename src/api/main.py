@@ -1,7 +1,7 @@
 """
 FastAPI application that serves predictions from the MLflow champion model.
 
-Loads the model registered under 'diabetes@champion' at startup
+Loads the model registered under 'diabetes-model@champion' at startup
 and exposes three endpoints: a health check, model metadata, and a predict route.
 """
 

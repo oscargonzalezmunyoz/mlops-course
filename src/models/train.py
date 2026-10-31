@@ -156,7 +156,7 @@ def run_experiment(model, model_type: str, params: dict,
 # ----
 
 def main() -> None:
-    """Run the full experiment tracking pipeline for both models."""
+    """Run the full experiment tracking pipeline for all models."""
     mlflow.set_tracking_uri(MLFLOW_TRACKING_URI.as_uri())
     mlflow.set_experiment(EXPERIMENT_NAME)
     logger.info("MLflow tracking URI: %s", MLFLOW_TRACKING_URI)

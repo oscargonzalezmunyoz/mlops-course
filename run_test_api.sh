@@ -11,7 +11,7 @@ INPUT_MISSING_FIELDS='{"age":0.038}'
 
 expect_status() {
   local code
-  code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$URL/predict" -H "Content-Type: application/json" -d "%2")
+  code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$URL/predict" -H "Content-Type: application/json" -d "$2")
   if [[ "$code" != "$1" ]]; then
     echo "FAIL: $3 -> expected $1, got $code"
     exit 1
