@@ -9,7 +9,7 @@ from mlflow.tracking import MlflowClient
 from sklearn.model_selection import train_test_split
 
 
-from src.config import PROCESSED_PATH, MLFLOW_TRACKING_URI
+from src.config import FEATURED_PATH, MLFLOW_TRACKING_URI
 from src.config import EXPERIMENT_NAME, REGISTERED_MODEL_NAME, TARGET, TEST_SIZE, RANDOM_STATE
 from src.config import RMSE_THRESHOLD, R2_THRESHOLD, MODEL_ALIAS
 
@@ -132,7 +132,7 @@ def evaluate_registered_model(
             "stage": "evaluation",
             "model_version": model_version,
             "registered_model_name": REGISTERED_MODEL_NAME,
-            "dataset": PROCESSED_PATH.name,
+            "dataset": FEATURED_PATH.name,
         })
 
         # mlflow.evaluate() computes a standard regression metric suite and
@@ -233,7 +233,7 @@ def main() -> None:
     model_version = get_latest_version(client, REGISTERED_MODEL_NAME)
 
     # --- Load test data ---
-    X_test, y_test = load_test_data(PROCESSED_PATH)
+    X_test, y_test = load_test_data(FEATURED_PATH)
 
     # --- Evaluate ---
     result = evaluate_registered_model(client, model_version, X_test, y_test)

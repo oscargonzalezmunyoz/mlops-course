@@ -25,6 +25,8 @@ from contextlib import asynccontextmanager
 
 import pandas as pd
 from fastapi import FastAPI, HTTPException
+
+from src.data.features import feature_engineering
 from src.config import REGISTERED_MODEL_NAME
 
 from .model import (   
@@ -92,6 +94,7 @@ def predict(features: DiabetesFeatures) -> PredictionResponse:
     """
     model = get_model()
     input_df = pd.DataFrame([features.model_dump()], columns=FEATURE_COLUMNS)
+    input_df = feature_engineering(input_df)
 
     try:
         prediction = model.predict(input_df)

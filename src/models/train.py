@@ -17,9 +17,9 @@ from sklearn.model_selection import train_test_split
 # Paths & constants
 # -----------------
 
-from src.config import PROCESSED_PATH, MLFLOW_TRACKING_URI
+from src.config import FEATURED_PATH, MLFLOW_TRACKING_URI
 from src.config import EXPERIMENT_NAME, TARGET, TEST_SIZE, RANDOM_STATE
-from src.config import RANDOM_FOREST_ESTIMATORS, RANDOM_FOREST_MAX_DEPTH
+from src.config import RANDOM_FOREST_ESTIMATORS
 
 # -------
 # Logging
@@ -121,7 +121,7 @@ def run_experiment(model, model_type: str, params: dict,
         # --- Tags ---
         mlflow.set_tags({
             "model_type": model_type,
-            "dataset": PROCESSED_PATH.name,
+            "dataset": FEATURED_PATH.name,
             "stage": "training",
         }) 
         # --- Params ---
@@ -162,7 +162,7 @@ def main() -> None:
     logger.info("MLflow tracking URI: %s", MLFLOW_TRACKING_URI)
     logger.info("Experiment:          %s", EXPERIMENT_NAME)
 
-    df = load_features(PROCESSED_PATH)
+    df = load_features(FEATURED_PATH)
     X_train, X_test, y_train, y_test = split_data(df)
 
     # --- Baseline : DummyRegressor ---
@@ -187,9 +187,9 @@ def main() -> None:
     # --- Model 2: RandomForestRegressor ---
     
     run_experiment(
-        model=RandomForestRegressor(n_estimators=RANDOM_FOREST_ESTIMATORS, max_depth=RANDOM_FOREST_MAX_DEPTH, random_state=RANDOM_STATE),
+        model=RandomForestRegressor(n_estimators=RANDOM_FOREST_ESTIMATORS, random_state=RANDOM_STATE),
         model_type="RandomForestRegressor",
-        params={"n_estimators": RANDOM_FOREST_ESTIMATORS, "max_depth": RANDOM_FOREST_MAX_DEPTH, "random_state": RANDOM_STATE},
+        params={"n_estimators": RANDOM_FOREST_ESTIMATORS, "random_state": RANDOM_STATE},
         X_train=X_train, X_test=X_test,
         y_train=y_train, y_test=y_test,
     )

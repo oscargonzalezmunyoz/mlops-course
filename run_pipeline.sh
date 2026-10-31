@@ -15,6 +15,7 @@ steps=(
     src.data.load_data
     src.data.validate_data
     src.data.preprocess
+    src.data.features
     src.models.train
     src.models.register_model
     src.models.evaluate_model    
