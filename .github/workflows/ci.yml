@@ -44,7 +44,7 @@ jobs:
       # Start the api in background, wait until /health answers
       - name: Start API
         run: |
-          docker run -d --name api -p 8000:8000 mlops-api |
+          docker run -d --name api -p 8000:8000 mlops-api
           for i in $(seq 1 30); do
             curl -s http://localhost:8000/health && break
             sleep 1
