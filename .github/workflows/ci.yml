@@ -54,13 +54,9 @@ jobs:
           done
           echo "API did not answer in 30 seconds"
           exit 1
-      # Smoke tests. --fail makes curl exit 1 on HTTP errors
+      # Smoke tests using the same script used locally
       - name: Test API
-        run: |
-          curl -w "\n" --fail http://localhost:8000/health
-          curl -w "\n" --fail http://localhost:8000/model-info        
-          curl -w "\n" --fail -X POST http://localhost:8000/predict -H "Content-Type: application/json" \
-          -d '{"age":0.038,"sex":0.05,"bmi":0.0617,"bp":0.0219,"s1":-0.0442,"s2":-0.0348,"s3":-0.0434,"s4":-0.0026,"s5":0.0199,"s6":-0.0176}'  
+        run: bash run_test_api.sh
       - name: API logs
         if: failure()
         run: |
